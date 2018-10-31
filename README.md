@@ -1,5 +1,7 @@
-# Guide Bot
-An example of a Discord.js Bot Handler. Updated and Maintained by the Idiot's Guide Community.
+# Erisified Guide Bot
+An example of a **Eris** Bot Handler. Originally created by the Idiot's Guide Community.
+
+# Originally described as follows:
 
 Ages ago, Guide Bot was actually a little bot I had on the official discord.js server.
 It helped me link to the d.js bot making guide I was building, with links.
@@ -9,8 +11,9 @@ group of contributors, and no longer easily "understandable" by the majority
 of our newbies. So I've pulled the original Guide Bot out of the mothballs,
 gave it a fresh coat of paint and grease, and here it is back in its full glory!
 
-This command handler is 98% compatible with [my selfbot](https://github.com/eslachance/evie.selfbot) 
-and 99% compatible with commands from [York's Tutorial Bot](https://github.com/AnIdiotsGuide/Tutorial-Bot/tree/Episode-10-Part-1).
+This command handler *was* 98% compatible with [eslachance's selfbot](https://github.com/eslachance/evie.selfbot) 
+and 99% compatible with commands from [York's Tutorial Bot](https://github.com/AnIdiotsGuide/Tutorial-Bot/tree/Episode-10-Part-1),
+but now it may be not, since it was changed for Eris.
 
 ## Requirements
 
@@ -26,7 +29,7 @@ for more info.
 
 In a command prompt in your projects folder (wherever that may be) run the following:
 
-`git clone https://github.com/An-Idiots-Guide/guidebot.git`
+`git clone https://github.com/MaySoMusician/guidebot-erisified.git`
 
 Once finished: 
 
