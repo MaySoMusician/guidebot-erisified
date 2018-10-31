@@ -1,7 +1,7 @@
 {
-  "name": "guidebot",
-  "version": "2.3.5",
-  "description": "A boilerplate example bot with command handler and reloadable commands. Updated and Maintained by the Idiot's Guide Community",
+  "name": "guidebot-erisified",
+  "version": "0.1.0",
+  "description": "For Eris, a boilerplate example bot with command handler and reloadable commands. Originally created by the Idiot's Guide Community.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,23 +12,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/An-Idiots-Guide/guidebot.git"
+    "url": "git+https://github.com/MaySoMusician/guidebot-erisified.git"
   },
-  "author": "Evelyne Lachance <eslachance@gmail.com> (http://evie.codes)",
+  "author": "MaySoMusician (maysomusician@gmail.com)",
   "contributors": [
+    "Evelyne Lachance <eslachance@gmail.com> (http://evie.codes)",
     "York (http://anidiots.guide)"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/An-Idiots-Guide/guidebot/issues"
+    "url": "https://github.com/MaySoMusician/guidebot-erisified/issues"
   },
-  "homepage": "https://github.com/An-Idiots-Guide/guidebot#readme",
+  "homepage": "https://github.com/MaySoMusician/guidebot-erisified#readme",
   "dependencies": {
     "better-sqlite-pool": "^0.1.2",
     "chalk": "^2.3.0",
-    "discord.js": "^11.4.2",
+    "eris": "^0.9.0",
     "enmap": "^4.2.1",
-    "moment": "^2.20.1",
-    "moment-duration-format": "^2.2.0"
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0"
   }
 }
