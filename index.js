@@ -4,19 +4,22 @@
 if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
 // Load up the discord.js library
-const Discord = require("discord.js");
+const Eris = require("Eris");
 // We also load the rest of the things we need in this file:
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 
+// Here we load the config file that contains our token and our prefix values.
+const config = require("./config.js");
+
 // This is your client. Some people call it `bot`, some people call it `self`,
 // some might call it `cootchie`. Either way, when you see `client.something`,
 // or `bot.something`, this is what we're refering to. Your client.
-const client = new Discord.Client();
+const client = new Eris(config.token);
 
-// Here we load the config file that contains our token and our prefix values.
-client.config = require("./config.js");
+// Now bind the settings to our client object
+client.config = config;
 // client.config.token contains the bot's token
 // client.config.prefix contains the message prefix
 
@@ -73,7 +76,7 @@ const init = async () => {
   }
 
   // Here we login the client.
-  client.login(client.config.token);
+  client.connect();
 
 // End top-level async/await function.
 };
