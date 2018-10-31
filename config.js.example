@@ -48,8 +48,8 @@ const config = {
       // If they don't then return false, which will prevent them from executing the command.
       check: (message) => {
         try {
-          const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
-          if (modRole && message.member.roles.has(modRole.id)) return true;
+          const modRole = message.channel.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
+          if (modRole && modRole.id in message.member.roles) return true;
         } catch (e) {
           return false;
         }
@@ -60,8 +60,8 @@ const config = {
       name: "Administrator", 
       check: (message) => {
         try {
-          const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
-          return (adminRole && message.member.roles.has(adminRole.id));
+          const adminRole = message.channel.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
+          return (adminRole && adminRole.id in message.member.roles);
         } catch (e) {
           return false;
         }
@@ -72,7 +72,8 @@ const config = {
       name: "Server Owner", 
       // Simple check, if the guild owner id matches the message author's ID, then it will return true.
       // Otherwise it will return false.
-      check: (message) => message.channel.type === "text" ? (message.guild.ownerID === message.author.id ? true : false) : false
+      // Note: The type of text channels is 0
+      check: (message) => message.channel.type === 0 ? (message.channel.guild.ownerID === message.author.id ? true : false) : false
     },
 
     // Bot Support is a special inbetween level that has the equivalent of server owner access
