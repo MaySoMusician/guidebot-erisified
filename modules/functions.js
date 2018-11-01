@@ -131,6 +131,93 @@ module.exports = (client) => {
     return false;
   };
 
+  /*
+  VERY-LONG-MESSAGE SENDING UTILITIES
+
+  These functions are for sending certainly long messages, for example which exceed
+  Discord's message length limit. They are really useful for sending list of something,
+  or showing some error messages, but Eris doesn't implement them, while Discord.js does.
+  But you don't need to feel sadnees any more; HERE THEY ARE!
+  */
+
+  // Splits a string into multiple chunks at a designated character that do not exceed a specific length.
+  // text (Type: string): Content to split
+  // maxLength=1950 (Type: number): Maximum character length per message piece
+  // char="\n" (Type: string): Character to split the message with
+  // prepend="" (Type: string): Text to prepend to every piece except the first
+  // append="" (Type: string): Text to prepend to every piece except the last
+  client.splitMessage = (text, {maxLength = 1950, char = "\n", prepend = "", append = ""} = {}) => {
+    if (text.length <= maxLength) return text;
+    const splitText = text.split(char);
+
+    if (splitText.length === 1) throw new Error("Message esceeds the max length and contains no split characters.");
+
+    const messages = [""];
+    let msg = 0;
+    for (let i = 0; i < splitText.length; i++) {
+      if (messages[msg].length + splitText[i].length + 1 > maxLength) {
+        messages[msg] += append;
+        messages.push(prepend);
+        msg++;
+      }
+      messages[msg] += (messages[msg].length > 0 && messages[msg] !== prepend ? char : "") + splitText[i];
+    }
+    return messages;
+  };
+
+  // Escapes any Discord-flavour markdown in a string.
+  // text (Type: string): Content to escape
+  // onlyCodeBlock=false (Type: boolean): Whether to only escape codeblocks (takes priority)
+  // onlyInlineCode=false (Type: boolean): Whether to only escape inline code
+  client.escapeMarkdown = (text, onlyCodeBlock = false, onlyInlineCode = false) => {
+    if (onlyCodeBlock) return text.replace(/```/g, "`\u200b``");
+    if (onlyInlineCode) return text.replace(/\\(`|\\)/g, "$1").replace(/(`|\\)/g, "\\$1");
+    return text.replace(/\\(\*|_|`|~|\\)/g, "$1").replace(/(\*|_|`|~|\\)/g, "\\$1");
+  };
+
+  client.createMessageExtended = (channelID, content, file, {split, code} = {}) => {
+    return new Promise((resolve) => {
+      if (content) {
+        if (split && typeof split !== "object") split = {};
+  
+        // Resolves a StringResolvable to a string.
+        const resolveString = data => {
+          if (typeof data === "string") return data;
+          if (data instanceof Array) return data.join("\n");
+          return String(data);
+        };
+  
+        // Wrap everything in a code block
+        if (typeof code !== "undefined" && (typeof code !== "boolean" || code === true)) {
+          content = client.escapeMarkdown(resolveString(content), true);
+          content = `\`\`\`${typeof code !== "boolean" ? code || "" : ""}\n${content}\n\`\`\``;
+          if (split) {
+            split.prepend = `\`\`\`${typeof code !== "boolean" ? code || "" : ""}\n`;
+            split.append = "\n```";
+          }
+        }
+  
+        // Split the content
+        if (split) content = client.splitMessage(content, split);
+      }
+      resolve({
+        channelID: channelID,
+        content: content,
+        file: file
+      });
+    }).then(args => {
+      const { channelID, content, file} = args;
+      if (content instanceof Array) {
+        for (let i = 0; i < content.length; i++) {
+          if (i === content.length - 1) return client.createMessage(channelID, content[i], file);
+          else client.createMessage(channelID, content[i]);
+        }
+      } else {
+        return client.createMessage(channelID, content, file);
+      }
+    });
+  };
+
   /* MISCELANEOUS NON-CRITICAL FUNCTIONS */
   
   // EXTENDING NATIVE TYPES IS BAD PRACTICE. Why? Because if JavaScript adds this

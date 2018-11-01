@@ -21,6 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ===================================
+Some functions are ported from Discord.js, which is  distributed in the Apache License 2.0.
+
+===================================
 The original License is as follows:
 
 MIT License
