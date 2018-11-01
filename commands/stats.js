@@ -12,7 +12,7 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 • Users      :: ${client.users.size.toLocaleString()}
 • Servers    :: ${client.guilds.size.toLocaleString()}
 • Channels   :: ${Object.keys(client.channelGuildMap).length.toLocaleString()}
-• Discord.js :: v${VERSION}
+• Eris       :: v${VERSION}
 • Node       :: ${process.version}`,
     null,
     {code: "asciidoc"}

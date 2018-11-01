@@ -3,7 +3,7 @@
 // you.
 if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
-// Load up the discord.js library
+// Load up the Eris library
 const Eris = require("Eris");
 // We also load the rest of the things we need in this file:
 const { promisify } = require("util");
@@ -63,7 +63,7 @@ const init = async () => {
     client.logger.log(`Loading Event: ${eventName}`);
     const event = require(`./events/${file}`);
     // Bind the client to any event, before the existing arguments
-    // provided by the discord.js event. 
+    // provided by the Eris event. 
     // This line is awesome by the way. Just sayin'.
     client.on(eventName, event.bind(null, client));
   });
