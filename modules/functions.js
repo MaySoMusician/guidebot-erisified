@@ -218,6 +218,16 @@ module.exports = (client) => {
     });
   };
 
+  /*
+  SINGLE-LINE REPLY
+
+  A simple way to reply a user's message.
+  */
+  
+  client.replyMessage = (message, text) => {
+    return message.channel.createMessage(`<@${message.author.id}>, ${text}`);
+  };
+
   /* MISCELANEOUS NON-CRITICAL FUNCTIONS */
   
   // EXTENDING NATIVE TYPES IS BAD PRACTICE. Why? Because if JavaScript adds this
