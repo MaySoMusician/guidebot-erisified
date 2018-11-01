@@ -28,7 +28,7 @@ exports.run = (client, message, args, level) => {
       }
       output += `${message.settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
     });
-    client.createMessageExtended(message.channel.id, output, {code: "asciidoc", split: { char: "\u200b" }});
+    client.createMessageExtended(message.channel.id, output, null, {code: "asciidoc", split: { char: "\u200b" }});
   } else {
     // Show individual command's help.
     let command = args[0];
@@ -38,6 +38,7 @@ exports.run = (client, message, args, level) => {
       client.createMessageExtended(
         message.channel.id,
         `= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\naliases:: ${command.conf.aliases.join(", ")}\n= ${command.help.name} =`,
+        null,
         {code:"asciidoc"}
       );
     }
