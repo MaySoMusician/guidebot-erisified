@@ -56,6 +56,7 @@ module.exports = (client) => {
   msg.reply(`Oh, I really love ${response} too!`);
 
   */
+  /* Commented out because there are no function in Eris corresponding to 'awaitMessages' in Discord.js
   client.awaitReply = async (msg, question, limit = 60000) => {
     const filter = m => m.author.id === msg.author.id;
     await msg.channel.send(question);
@@ -65,7 +66,7 @@ module.exports = (client) => {
     } catch (e) {
       return false;
     }
-  };
+  };*/
 
 
   /*
