@@ -1,17 +1,22 @@
-const { version } = require("discord.js");
+const { VERSION } = require("Eris");
 const moment = require("moment");
 require("moment-duration-format");
 
 exports.run = (client, message, args, level) => { // eslint-disable-line no-unused-vars
   const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-  message.channel.send(`= STATISTICS =
+  client.createMessageExtended(
+    message.channel.id,
+    `= STATISTICS =
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}
 • Users      :: ${client.users.size.toLocaleString()}
 • Servers    :: ${client.guilds.size.toLocaleString()}
-• Channels   :: ${client.channels.size.toLocaleString()}
-• Discord.js :: v${version}
-• Node       :: ${process.version}`, {code: "asciidoc"});
+• Channels   :: ${Object.keys(client.channelGuildMap).length.toLocaleString()}
+• Discord.js :: v${VERSION}
+• Node       :: ${process.version}`,
+    null,
+    {code: "asciidoc"}
+  );
 };
 
 exports.conf = {
