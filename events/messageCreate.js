@@ -9,7 +9,7 @@ module.exports = async (client, message) => {
 
   // Grab the settings for this server from Enmap.
   // If there is no guild, get default conf (DMs)
-  const settings = message.settings = client.getSettings(message.guild.id);
+  const settings = message.settings = client.getSettings(message.channel.guild.id);
 
   // Checks if the bot was mentioned, with no message after it, returns the prefix.
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
@@ -29,7 +29,10 @@ module.exports = async (client, message) => {
   const command = args.shift().toLowerCase();
 
   // If the member on a guild is invisible or not cached, fetch them.
-  if (message.guild && !message.member) await message.guild.fetchMember(message.author);
+  if (message.channel.guild && !message.member) {
+    message.channel.guild.fetchAllMembers();
+    await client.wait(2000);
+  }
 
   // Get the user or member's permission level from the elevation
   const level = client.permlevel(message);
@@ -43,12 +46,12 @@ module.exports = async (client, message) => {
 
   // Some commands may not be useable in DMs. This check prevents those commands from running
   // and return a friendly error message.
-  if (cmd && !message.guild && cmd.conf.guildOnly)
-    return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");
+  if (cmd && !message.channel.guild && cmd.conf.guildOnly)
+    return message.channel.createMessage("This command is unavailable via private message. Please run this command in a guild.");
 
   if (level < client.levelCache[cmd.conf.permLevel]) {
     if (settings.systemNotice === "true") {
-      return message.channel.send(`You do not have permission to use this command.
+      return message.channel.createMessage(`You do not have permission to use this command.
   Your permission level is ${level} (${client.config.permLevels.find(l => l.level === level).name})
   This command requires level ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
     } else {
